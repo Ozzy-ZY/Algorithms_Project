@@ -18,7 +18,7 @@ This project is a college assignment that implements three fundamental sorting a
    ```
 2. Navigate to the project directory:
    ```sh
-   cd sorting-algorithms
+   cd Algorithms_Project
    ```
 3. Compile and run the project as per the provided instructions.
 

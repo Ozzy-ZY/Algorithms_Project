@@ -1,12 +1,92 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-class Sorting {
+
+class SortingIterative {
+private:
+
+    static void merge(vector<int>& array, int leftIndex, int midIndex, int rightIndex)
+    {
+        int leftSubarraySize = midIndex - leftIndex + 1;
+        int rightSubarraySize = rightIndex - midIndex;
+
+        vector<int> leftSubarray(leftSubarraySize), rightSubarray(rightSubarraySize);
+
+        for (int i = 0; i < leftSubarraySize; i++) 
+            leftSubarray[i] = array[leftIndex + i];
+        
+        for (int i = 0; i < rightSubarraySize; i++) 
+            rightSubarray[i] = array[midIndex + 1 + i];
+        
+        int leftPos = 0; 
+        int rightPos = 0;
+        int mergePos = leftIndex; 
+
+        while (leftPos < leftSubarraySize && rightPos < rightSubarraySize)
+        {
+            if (leftSubarray[leftPos] <= rightSubarray[rightPos]) 
+                array[mergePos++] = leftSubarray[leftPos++];
+            else 
+                array[mergePos++] = rightSubarray[rightPos++];
+        }
+
+        while (leftPos < leftSubarraySize) 
+            array[mergePos++] = leftSubarray[leftPos++];
+        
+        while (rightPos < rightSubarraySize) 
+            array[mergePos++] = rightSubarray[rightPos++];
+    }
+
+public:
+    static void insertionSort(vector<int>& array)
+    {
+        int arraySize = array.size();
+        for (int currentPos = 1; currentPos < arraySize; currentPos++)
+        {
+            int currentElement = array[currentPos];
+            
+            int prevPos = currentPos - 1;
+            while(prevPos >= 0 && currentElement < array[prevPos])
+            {
+                array[prevPos + 1] = array[prevPos];
+                --prevPos;
+            }
+            
+            array[prevPos + 1] = currentElement;
+        }
+    }
+
+    static void bubbleSort(vector<int>& array)
+    {
+        int arraySize = array.size();
+        for (int pass = 0; pass < arraySize-1; pass++)
+        {
+            for (int compareIndex = 0; compareIndex < arraySize-pass-1; compareIndex++)
+            {
+                if (array[compareIndex] > array[compareIndex+1]) 
+                    swap(array[compareIndex], array[compareIndex+1]);
+            }
+        }
+    }
+
+    static void mergeSort(vector<int>& array)
+    {
+        int arraySize = array.size();
+        for (int subarraySize = 1; subarraySize < arraySize; subarraySize *= 2)
+            for (int leftStart = 0; leftStart < arraySize - subarraySize; leftStart += 2 * subarraySize)
+            {
+                int midPoint = min(leftStart + subarraySize - 1, arraySize - 1);
+                int rightEnd = min(leftStart + 2 * subarraySize - 1, arraySize - 1);
+
+                merge(array, leftStart, midPoint, rightEnd);
+            }
+    }
+};
+class SortingRecursive {
 private:
     static void merge(vector<int>& arr, int leftStart, int leftEnd, int rightStart, int rightEnd) {
         vector<int> leftSubarray, rightSubarray;
         
-        // Copy elements to temporary arrays
         for (int i = leftStart; i <= leftEnd; i++) {
             leftSubarray.push_back(arr[i]);
         }
@@ -15,12 +95,10 @@ private:
             rightSubarray.push_back(arr[i]);
         }
         
-        // Merge the temporary arrays back
         int leftIndex = 0;
         int rightIndex = 0;
         int mergeIndex = leftStart;
         
-        // Compare and merge elements from both subarrays
         while (leftIndex < leftSubarray.size() && rightIndex < rightSubarray.size()) {
             if (leftSubarray[leftIndex] <= rightSubarray[rightIndex]) {
                 arr[mergeIndex++] = leftSubarray[leftIndex++];
@@ -29,12 +107,10 @@ private:
             }
         }
         
-        // Copy remaining elements from right subarray if any
         while (rightIndex < rightSubarray.size()) {
             arr[mergeIndex++] = rightSubarray[rightIndex++];
         }
         
-        // Copy remaining elements from left subarray if any
         while (leftIndex < leftSubarray.size()) {
             arr[mergeIndex++] = leftSubarray[leftIndex++];
         }
@@ -43,12 +119,9 @@ private:
     static void mergeSortRecursive(vector<int>& arr, int left, int right) {
         if (left < right) {
             int mid = (left + right) / 2;
-            
-            // Sort first and second halves
             mergeSortRecursive(arr, left, mid);
             mergeSortRecursive(arr, mid + 1, right);
-            
-            // Merge the sorted halves
+    
             merge(arr, left, mid, mid + 1, right);
         }
     }
@@ -73,7 +146,6 @@ private:
         insertionSortRecursive(arr, index + 1);
     }
     
-    // Recursive function for bubble sort
     static void bubbleSortRecursive(vector<int>& arr, int index) {
         if (index == arr.size() - 1) {
             return;
@@ -128,19 +200,23 @@ int main() {
     switch (choice) {
         case 1:
             cout << "Applying Merge Sort...\n";
-            Sorting::mergeSort(arr);
+            //SortingRecursive::mergeSort(arr);
+            SortingIterative::mergeSort(arr);
             break;
         case 2:
             cout << "Applying Insertion Sort...\n";
-            Sorting::insertionSort(arr);
+            //SortingRecursive::insertionSort(arr);
+            SortingIterative::insertionSort(arr);
             break;
         case 3:
             cout << "Applying Bubble Sort...\n";
-            Sorting::bubbleSort(arr);
+            //SortingRecursive::bubbleSort(arr);
+            SortingIterative::bubbleSort(arr);
             break;
         default:
             cout << "Invalid choice! Using Merge Sort by default...\n";
-            Sorting::mergeSort(arr);
+            //SortingRecursive::mergeSort(arr);
+            SortingIterative::mergeSort(arr);
     }
     
     cout << "Sorted array: ";

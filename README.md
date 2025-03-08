@@ -21,5 +21,14 @@ This project is a college assignment that implements three fundamental sorting a
    cd Algorithms_Project
    ```
 3. Compile and run the project as per the provided instructions.
+## Presentation
+[Presentation](https://www.canva.com/design/DAGhFgSWjig/EvAGL9yPlNWIpzVrWTUNTA/edit?utm_content=DAGhFgSWjig&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+## Contributors
+
+1. Zyad Mohamed Mahmoud Alsaeed
+2. Seham Nasr Ali Elmaghraby
+3. Mariam Mohamed Bayoumi
+4. Farah Mohamed Ghareeb
+5. Amr khaled Arab
 
 

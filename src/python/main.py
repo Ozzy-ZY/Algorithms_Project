@@ -116,7 +116,7 @@ def bubble_sort_iterative(array):
         for comparison_idx in range(0, array_length - 1):
             if (array[comparison_idx + 1] < array[comparison_idx]):
                 is_already_sorted = False
-                
+                # swap
                 array[comparison_idx] = array[comparison_idx] + array[comparison_idx + 1]
                 array[comparison_idx + 1] = array[comparison_idx] - array[comparison_idx + 1]
                 array[comparison_idx] = array[comparison_idx] - array[comparison_idx + 1]
@@ -136,6 +136,7 @@ def bubble_sort_recursive(array, array_size=None):
     
     for comparison_idx in range(array_size - 1):
         if array[comparison_idx] > array[comparison_idx + 1]:
+            # swap
             array[comparison_idx] = array[comparison_idx] + array[comparison_idx + 1]
             array[comparison_idx + 1] = array[comparison_idx] - array[comparison_idx + 1]
             array[comparison_idx] = array[comparison_idx] - array[comparison_idx + 1]
